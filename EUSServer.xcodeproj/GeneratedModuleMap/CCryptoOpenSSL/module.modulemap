@@ -1,0 +1,4 @@
+module CCryptoOpenSSL {
+    umbrella "/Users/denzu/Developer/EUSServer/.build/checkouts/crypto/Sources/CCryptoOpenSSL/include"
+    export *
+}

@@ -1,0 +1,4 @@
+module CNIOOpenSSL {
+    umbrella "/Users/denzu/Developer/EUSServer/.build/checkouts/swift-nio-ssl/Sources/CNIOOpenSSL/include"
+    export *
+}
