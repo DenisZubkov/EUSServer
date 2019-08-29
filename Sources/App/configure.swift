@@ -1,6 +1,7 @@
 import Vapor
 import FluentMySQL
 import Fluent
+import Foundation
 /// Called before your application initializes.
 ///
 /// [Learn More →](https://docs.vapor.codes/3.0/getting-started/structure/#configureswift)

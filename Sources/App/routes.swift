@@ -1,5 +1,6 @@
 import Routing
 import Vapor
+import Foundation
 
 /// Register your application's routes here.
 ///

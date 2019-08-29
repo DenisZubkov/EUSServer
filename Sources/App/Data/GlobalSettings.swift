@@ -24,6 +24,7 @@ class GlobalSettings {
     let skype = ""
     var login = "zubkoff"
     var password = "!den20zu10"
+    var dataDict: [String : Data] = [:]
     let parameterDict: [TypeParameters : String] = [
         .category: "71c4c213-08c4-11e9-94b6-0050568d26bf",
         .tactic: "b01fa2f0-08c4-11e9-94b6-0050568d26bf",

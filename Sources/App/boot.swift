@@ -1,5 +1,6 @@
 import Routing
 import Vapor
+import Foundation
 
 /// Called after your application has initialized.
 ///
