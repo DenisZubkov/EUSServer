@@ -13,13 +13,14 @@ class ParceDataProvider {
     
     let globalSettings = GlobalSettings()
     var usersTeams: [String:String] = [:]
+    let type = QueryResultFormat.json
     
     
     //MARK: 1C - PARSING
     
     //MARK: Parameters - update
     func parceParameters(properties: inout [Property], req: DatabaseConnectable)  {
-        if let nsData = UserDefaults.standard.value(forKey: "0") as? NSData {
+        if let nsData = UserDefaults.standard.value(forKey: "0\(type.rawValue)") as? NSData {
             let data = nsData as Data
             let parametersJSON: ParametersJSON? = self.globalSettings.getType(from: data)
             
@@ -44,7 +45,7 @@ class ParceDataProvider {
     
     //MARK: PropertyValues - update
     func parceParameterValues(propertyValues: inout [PropertyValue], req: DatabaseConnectable)  {
-        if let nsData = UserDefaults.standard.value(forKey: "1") as? NSData {
+        if let nsData = UserDefaults.standard.value(forKey: "1\(type.rawValue)") as? NSData {
             let data = nsData as Data
             let parameterValuesJSON: ParameterValuesJSON? = self.globalSettings.getType(from: data)
             if let parameterValues = parameterValuesJSON?.value {
@@ -141,6 +142,7 @@ class ParceDataProvider {
     }
     
     
+    
     //MARK: BusinessValues - update
     func parceBusinessValues(properties: [Property], propertyValues: [PropertyValue], businessValues: inout [BusinessValue], req: DatabaseConnectable)  {
         
@@ -164,7 +166,26 @@ class ParceDataProvider {
         }
     }
     
-    
+    //MARK: Quarts - update
+    func parceQuarts(properties: [Property], propertyValues: [PropertyValue], quarts: inout [Quart], req: DatabaseConnectable)  {
+        
+        if let quartId = properties.filter({$0.name == "Квартал"}).first?.guid {
+            let quarts1C = propertyValues.filter({$0.propertyId == quartId})
+            for quart1C in quarts1C {
+                if var quartDB = quarts.filter({$0.guid == quartId}).first {
+                    if quartDB.dataVersion != quart1C.dataVersion {
+                        quartDB.dataVersion = quart1C.dataVersion
+                        quartDB.name = quart1C.value
+                        let _ = quartDB.save(on: req)
+                    }
+                } else {
+                    let quartDB = Quart.init(id: nil, guid: quart1C.guid, dataVersion: quart1C.dataVersion, name: quart1C.value)
+                    let _ = quartDB.save(on: req)
+                    quarts.append(quartDB)
+                }
+            }
+        }
+    }
     
     //MARK: TypeTeams - update
     func parceTypeTeams(typeTeams: inout [TypeTeam], req: DatabaseConnectable)  {
@@ -187,7 +208,7 @@ class ParceDataProvider {
     
     // MARK: Dept - update
     func parceDepts(depts: inout [Dept], req: DatabaseConnectable)  {
-        if let nsData = UserDefaults.standard.value(forKey: "2") as? NSData {
+        if let nsData = UserDefaults.standard.value(forKey: "2\(type.rawValue)") as? NSData {
             let data = nsData as Data
             let deptsJSON: DeptsJSON? = self.globalSettings.getType(from: data)
             
@@ -219,7 +240,7 @@ class ParceDataProvider {
     
     // MARK: Teams - update
     func parceTeams(teams: inout [Team], req: DatabaseConnectable)  {
-        if let nsData = UserDefaults.standard.value(forKey: "3") as? NSData {
+        if let nsData = UserDefaults.standard.value(forKey: "3\(type.rawValue)") as? NSData {
             let data = nsData as Data
             let userGroupsJSON: UserGroupsJSON? = self.globalSettings.getType(from: data)
             
@@ -262,7 +283,7 @@ class ParceDataProvider {
     
     // MARK: Users - update
     func parceUsers(users: inout [User], req: DatabaseConnectable)  {
-        if let nsData = UserDefaults.standard.value(forKey: "4") as? NSData {
+        if let nsData = UserDefaults.standard.value(forKey: "4\(type.rawValue)") as? NSData {
             let data = nsData as Data
             let usersJSON: UsersJSON? = self.globalSettings.getType(from: data)
             
@@ -312,7 +333,7 @@ class ParceDataProvider {
     
     //MARK: Directions - update
     func parceDirections(directions: inout [Direction],  req: DatabaseConnectable)  {
-        if let nsData = UserDefaults.standard.value(forKey: "6") as? NSData {
+        if let nsData = UserDefaults.standard.value(forKey: "6\(type.rawValue)") as? NSData {
             let data = nsData as Data
             let directionsJSON: DirectionsJSON? = self.globalSettings.getType(from: data)
             
@@ -342,7 +363,7 @@ class ParceDataProvider {
     
     //MARK: Quotas - update
     func parceQuotas(quotas: inout [Quota], req: DatabaseConnectable)  {
-        if let nsData = UserDefaults.standard.value(forKey: "7") as? NSData {
+        if let nsData = UserDefaults.standard.value(forKey: "7\(type.rawValue)") as? NSData {
             let data = nsData as Data
             let quotasJSON: QuotasJSON? = self.globalSettings.getType(from: data)
             
@@ -368,10 +389,13 @@ class ParceDataProvider {
     }
     
     //MARK: EpicUserStories - update
-    func parceEpicUserStories(directions: [Direction], categories: [Category], tactics: [Tactic], businessValues: [BusinessValue], epicUserStories: inout [EpicUserStory], req: DatabaseConnectable)  {
-        if let nsData = UserDefaults.standard.value(forKey: "5") as? NSData {
+    func parceEpicUserStories(directions: [Direction], categories: [Category], tactics: [Tactic], users: [User], quarts: [Quart], businessValues: [BusinessValue], states: inout [State], epicUserStories: inout [EpicUserStory], req: DatabaseConnectable)  {
+        if let nsData = UserDefaults.standard.value(forKey: "5\(type.rawValue)") as? NSData,
+            let nsStateData = UserDefaults.standard.value(forKey: "8\(type.rawValue)") as? NSData{
             let data = nsData as Data
+            let stateData = nsStateData as Data
             let epicUserStoriesJSON: EpicUserStoriesJSON? = self.globalSettings.getType(from: data)
+            let eusStateJSON: EUSStateJSON? = self.globalSettings.getType(from: stateData)
             
             if let eus1C = epicUserStoriesJSON?.value {
                 for eus1C in eus1C {
@@ -412,6 +436,12 @@ class ParceDataProvider {
                     if let tacticNew = eus1C.дополнительныеРеквизиты.filter({$0.parameterId == globalSettings.parameterDict[.tactic]}).first {
                         if let tactic = tactics.filter({$0.guid == tacticNew.valueId}).first {
                             tacticId = tactic.guid
+                        }
+                    }
+                    var analiticId = ""
+                    if let analiticNew = eus1C.дополнительныеРеквизиты.filter({$0.parameterId == globalSettings.parameterDict[.analitic]}).first {
+                        if let analitic = users.filter({$0.guid == analiticNew.valueId}).first {
+                            analiticId = analitic.guid
                         }
                     }
                     var businessValueId = ""
@@ -502,8 +532,8 @@ class ParceDataProvider {
                         }
                     }
                     var quart: String?
-                    if let quartNew = eus1C.дополнительныеРеквизиты.filter({$0.parameterId == globalSettings.parameterDict[.quart]}).first {
-                        quart = quartNew.valueId
+                    if let quartId = eus1C.дополнительныеРеквизиты.filter({$0.parameterId == globalSettings.parameterDict[.quart]}).first?.value {
+                        quart = quarts.filter({$0.guid == quartId}).first?.name
                         
                     }
                     var deathLine: Date?
@@ -521,6 +551,18 @@ class ParceDataProvider {
                     let dateCreate = globalSettings.convertString1cToDate(from: eus1C.dateCreate)
                     let dateBegin = globalSettings.convertString1cToDate(from: eus1C.dateRegistration)
                     let noShow = eus1C.deletionMark
+                    
+                    var stateId = ""
+                    if let stateJson = eusStateJSON?.value.filter({$0.id == eus1C.id}).first?.name {
+                        if let state = states.filter({$0.name == stateJson}).first {
+                            stateId = state.guid
+                        } else {
+                            stateId = String(states.count)
+                            let stateDB = State.init(id: nil, guid: stateId, name: stateJson)
+                            let _ = stateDB.save(on: req)
+                            states.append(stateDB)
+                        }
+                    }
                     
                     
                     if var eusDB = epicUserStories.filter({$0.guid == eus1C.id}).first {
@@ -542,44 +584,17 @@ class ParceDataProvider {
                             eusDB.tacticId = tacticId
                             eusDB.storePointsAnaliticPlane = storePointsAnaliticPlane
                             eusDB.storePointsDevPlane = storePointsDevPlane
+                            eusDB.analiticId = analiticId
+                            eusDB.stateId = stateId
                             let _ = eusDB.save(on: req)
                         }
                     } else {
-                        let eusDB = EpicUserStory.init(id: nil, guid: eus1C.id, dataVersion: eus1C.dataVersion, dateBegin: dateBegin, dateCreate: dateCreate, dateEnd: nil, deathLine: deathLine, name: eus1C.title, noShow: noShow, num: eus1C.num, priority: priorityDB, quart: quart, businessValueId: businessValueId, categoryId: categoryId, deptId: eus1C.dept, directionId: directionId, productId: nil, productOwnerId: eus1C.productOwnerId, stateId: nil, tacticId: tacticId, storePointsAnaliticFact: nil, storePointsAnaliticPlane: storePointsAnaliticPlane, storePointsDevFact: nil, storePointsDevPlane: storePointsDevPlane, tfsAnalitic: nil, tfsBeginDate: nil, tfsBusinessArea: nil, tfsBusinessValue: nil, tfsCategory: nil, tfsDateCreate: nil, tfsEndDate: nil, tfsId: tfsIdDB, tfsLastChangeDate: nil, tfsParentWorkItemUrl: nil, tfsPriority: nil, tfsProductOwner: nil, tfsQuart: nil, tfsState: nil, tfsStorePointAnaliticFact: nil, tfsStorePointAnaliticPlan: nil, tfsStorePointDevFact: nil, tfsStorePointDevPlan: nil, tfsStorePointFact: nil, tfsStorePointPlan: nil, tfsTitle: nil, tfsUrl: tfsUrlDB, tfsWorkItemType: nil, analiticId: nil)
-                        let _ = eusDB.save(on: req)
+                        let eusDB = EpicUserStory.init(id: nil, guid: eus1C.id, dataVersion: eus1C.dataVersion, dateBegin: dateBegin, dateCreate: dateCreate, dateEnd: nil, deathLine: deathLine, name: eus1C.title, noShow: noShow, num: eus1C.num, priority: priorityDB, quart: quart, businessValueId: businessValueId, categoryId: categoryId, deptId: eus1C.dept, directionId: directionId, productId: nil, productOwnerId: eus1C.productOwnerId, stateId: stateId, tacticId: tacticId, storePointsAnaliticFact: nil, storePointsAnaliticPlane: storePointsAnaliticPlane, storePointsDevFact: nil, storePointsDevPlane: storePointsDevPlane, tfsAnalitic: nil, tfsBeginDate: nil, tfsBusinessArea: nil, tfsBusinessValue: nil, tfsCategory: nil, tfsDateCreate: nil, tfsEndDate: nil, tfsId: tfsIdDB, tfsLastChangeDate: nil, tfsParentWorkItemUrl: nil, tfsPriority: nil, tfsProductOwner: nil, tfsQuart: nil, tfsState: nil, tfsStorePointAnaliticFact: nil, tfsStorePointAnaliticPlan: nil, tfsStorePointDevFact: nil, tfsStorePointDevPlan: nil, tfsStorePointFact: nil, tfsStorePointPlan: nil, tfsTitle: nil, tfsUrl: tfsUrlDB, tfsWorkItemType: nil, analiticId: analiticId)
+                        // let _ = eusDB.save(on: req)
                         epicUserStories.append(eusDB)
                     }
                 }
             }
-        }
-    }
-    
-    //MARK: TREEWORKITEM - update
-    
-    func parseTreeWorkItemsJSONFromTFS (level: Int, queries: [ODataQuery], req: DatabaseConnectable, treeWorkitems: inout [TreeWorkItem]) {
-        for query in queries {
-            if let id = query.id,
-                let nsData = UserDefaults.standard.value(forKey: "\(id)") as? NSData {
-                let data = nsData as Data
-                let results: WorkItemsJSON? = globalSettings.getType(from: data)
-                if let workItems = results {
-                    for workItem in workItems.value {
-                        for strUrl in workItem.relations {
-                            if strUrl.rel == "System.LinkTypes.Hierarchy-Forward",
-                                let strId = strUrl.url.components(separatedBy: "/").last,
-                                let id = Int(strId) {
-                                
-                                let treeWorkItemDB = TreeWorkItem.init(id: nil, guid: id, level: level+1, parentId: workItem.id)
-                                let _ = treeWorkItemDB.save(on: req)
-                                treeWorkitems.append(treeWorkItemDB)
-                                
-                            }
-                        }
-                    }
-                }
-                
-            }
-            
         }
     }
     

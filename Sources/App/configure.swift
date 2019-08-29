@@ -20,7 +20,7 @@ public func configure(
     
     try services.register(FluentMySQLProvider())
     
-    let mysqlConfig = MySQLDatabaseConfig(hostname: "mysql", port: 3306, username: "epicus", password: "fox", database: "epicus", capabilities: .default, characterSet: .utf8_general_ci, transport: .unverifiedTLS)
+    let mysqlConfig = MySQLDatabaseConfig(hostname: "dcluster-node-2.tbm.ru", port: 3306, username: "root", password: "fox", database: "epicus", capabilities: .default, characterSet: .utf8_general_ci, transport: .unverifiedTLS)
     let mysql = MySQLDatabase(config: mysqlConfig)
     
     var databaseConfig = DatabasesConfig()
@@ -42,6 +42,11 @@ public func configure(
     migrationConfig.add(model: Quota.self, database: .mysql)
     migrationConfig.add(model: EpicUserStory.self, database: .mysql)
     migrationConfig.add(model: TreeWorkItem.self, database: .mysql)
+    migrationConfig.add(model: Product.self, database: .mysql)
+    migrationConfig.add(model: State.self, database: .mysql)
+    migrationConfig.add(model: UserStory.self, database: .mysql)
+    migrationConfig.add(model: UserStoryType.self, database: .mysql)
+    migrationConfig.add(model: Quart.self, database: .mysql)
     services.register(migrationConfig)
     
 }

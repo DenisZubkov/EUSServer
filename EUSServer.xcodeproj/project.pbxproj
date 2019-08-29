@@ -21,6 +21,12 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		7A2780582317C60500E9621B /* EUSStateJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A2780572317C60400E9621B /* EUSStateJSON.swift */; };
+		7AB0B9C32313ED800055CE89 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB0B9C22313ED800055CE89 /* Product.swift */; };
+		7AB94555231689980000701D /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB94554231689980000701D /* State.swift */; };
+		7AB9455D23168BAB0000701D /* UserStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB9455C23168BAB0000701D /* UserStory.swift */; };
+		7AB9455F23168D9A0000701D /* UserStoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB9455E23168D9A0000701D /* UserStoryType.swift */; };
+		7AB9456323179BDC0000701D /* Quart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB9456223179BDC0000701D /* Quart.swift */; };
 		7AE91C682313D8A700AFD17A /* UserGroupsJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE91C672313D8A600AFD17A /* UserGroupsJSON.swift */; };
 		OBJ_1056 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* DataProvider.swift */; };
 		OBJ_1057 /* GlobalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* GlobalSettings.swift */; };
@@ -5657,6 +5663,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7A2780572317C60400E9621B /* EUSStateJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EUSStateJSON.swift; sourceTree = "<group>"; };
+		7AB0B9C22313ED800055CE89 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		7AB94554231689980000701D /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		7AB9455C23168BAB0000701D /* UserStory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStory.swift; sourceTree = "<group>"; };
+		7AB9455E23168D9A0000701D /* UserStoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoryType.swift; sourceTree = "<group>"; };
+		7AB9456223179BDC0000701D /* Quart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quart.swift; sourceTree = "<group>"; };
 		7AE91C672313D8A600AFD17A /* UserGroupsJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserGroupsJSON.swift; sourceTree = "<group>"; };
 		"Console::Command::Product" /* Command.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Command.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Console::Console::Product" /* Console.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Console.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -7557,6 +7569,7 @@
 				OBJ_21 /* ParametersJSON.swift */,
 				OBJ_22 /* QuotasJSON.swift */,
 				OBJ_23 /* UsersJSON.swift */,
+				7A2780572317C60400E9621B /* EUSStateJSON.swift */,
 				OBJ_24 /* WorkItemJSON.swift */,
 				OBJ_25 /* WorkItemsJSON.swift */,
 			);
@@ -7808,20 +7821,25 @@
 		OBJ_26 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_27 /* BusinessValue.swift */,
-				OBJ_28 /* Category.swift */,
-				OBJ_29 /* Dept.swift */,
-				OBJ_30 /* Direction.swift */,
-				OBJ_31 /* EpicUserStory.swift */,
 				OBJ_32 /* Property.swift */,
 				OBJ_33 /* PropertyValue.swift */,
-				OBJ_34 /* Quota.swift */,
 				OBJ_35 /* StrategicTarget.swift */,
 				OBJ_36 /* Tactic.swift */,
-				OBJ_37 /* Team.swift */,
-				OBJ_38 /* TreeWorkItem.swift */,
+				OBJ_28 /* Category.swift */,
+				OBJ_27 /* BusinessValue.swift */,
 				OBJ_39 /* TypeTeam.swift */,
+				OBJ_29 /* Dept.swift */,
+				OBJ_37 /* Team.swift */,
 				OBJ_40 /* User.swift */,
+				OBJ_30 /* Direction.swift */,
+				OBJ_34 /* Quota.swift */,
+				OBJ_31 /* EpicUserStory.swift */,
+				OBJ_38 /* TreeWorkItem.swift */,
+				7AB0B9C22313ED800055CE89 /* Product.swift */,
+				7AB94554231689980000701D /* State.swift */,
+				7AB9455C23168BAB0000701D /* UserStory.swift */,
+				7AB9455E23168D9A0000701D /* UserStoryType.swift */,
+				7AB9456223179BDC0000701D /* Quart.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -8410,7 +8428,7 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -8425,7 +8443,6 @@
 				OBJ_1049 /* README.md */,
 				OBJ_1050 /* circle.yml */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_50 /* FluentMySQL 3.0.1 */ = {
@@ -11696,7 +11713,7 @@
 				English,
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_996 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -11786,6 +11803,8 @@
 				OBJ_1058 /* LoadDataProvider.swift in Sources */,
 				OBJ_1059 /* ODataQuery.swift in Sources */,
 				OBJ_1060 /* ODataServer.swift in Sources */,
+				7AB9455F23168D9A0000701D /* UserStoryType.swift in Sources */,
+				7AB0B9C32313ED800055CE89 /* Product.swift in Sources */,
 				OBJ_1061 /* ParceDataProvider.swift in Sources */,
 				OBJ_1062 /* DeptsJSON.swift in Sources */,
 				OBJ_1063 /* DirectionsJSON.swift in Sources */,
@@ -11798,14 +11817,17 @@
 				OBJ_1069 /* WorkItemJSON.swift in Sources */,
 				OBJ_1070 /* WorkItemsJSON.swift in Sources */,
 				OBJ_1071 /* BusinessValue.swift in Sources */,
+				7A2780582317C60500E9621B /* EUSStateJSON.swift in Sources */,
 				OBJ_1072 /* Category.swift in Sources */,
 				OBJ_1073 /* Dept.swift in Sources */,
 				OBJ_1074 /* Direction.swift in Sources */,
 				OBJ_1075 /* EpicUserStory.swift in Sources */,
 				OBJ_1076 /* Property.swift in Sources */,
 				OBJ_1077 /* PropertyValue.swift in Sources */,
+				7AB9456323179BDC0000701D /* Quart.swift in Sources */,
 				OBJ_1078 /* Quota.swift in Sources */,
 				OBJ_1079 /* StrategicTarget.swift in Sources */,
+				7AB9455D23168BAB0000701D /* UserStory.swift in Sources */,
 				OBJ_1080 /* Tactic.swift in Sources */,
 				OBJ_1081 /* Team.swift in Sources */,
 				OBJ_1082 /* TreeWorkItem.swift in Sources */,
@@ -11813,6 +11835,7 @@
 				OBJ_1084 /* User.swift in Sources */,
 				OBJ_1085 /* boot.swift in Sources */,
 				OBJ_1086 /* configure.swift in Sources */,
+				7AB94555231689980000701D /* State.swift in Sources */,
 				OBJ_1087 /* routes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

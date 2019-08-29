@@ -44,7 +44,8 @@ class GlobalSettings {
         .storePointsAnaliticFact18: "d36bb213-6a5e-11e9-afc8-0050568d26bf",
         .storePointsDevFact18: "e098b409-6a5e-11e9-afc8-0050568d26bf",
         .direction18: "ba84e2e0-67f1-11e9-afc8-0050568d26bf",
-        .direction19: "0b335ce8-6739-11e9-afc8-0050568d26bf"
+        .direction19: "0b335ce8-6739-11e9-afc8-0050568d26bf",
+        .analitic: "ec76a4bf-5a81-11e9-a906-0050568d26bf"
     ]
     
     
@@ -295,6 +296,16 @@ class GlobalSettings {
                                 id: nil)
         queryArray.append(query)
         
+        //EUSState [8]
+        if let eus18 = eusTypeDict[.eus18], let eus19 = eusTypeDict[.eus19] {
+            query = ODataQuery.init(server: server1C,
+                                    table: "InformationRegister_ДанныеВнутреннихДокументов",
+                                    filter: "ВидДокумента_Key eq guid'\(eus18)' or ВидДокумента_Key eq guid'\(eus19)'",
+                select: "Документ_Key, ПредставлениеСостояния",
+                orderBy: nil,
+                id: nil)
+            queryArray.append(query)
+        }
         
         //        //US TFS
         //        query = ODataQuery.init(server: serverTFS,
@@ -438,6 +449,7 @@ enum TypeParameters: String {
     case storePointsAnaliticFact18 = "ОА фактические трудозатраты (OLD)"
     case storePointsDevFact18 = "ОРПО фактические трудозатраты (OLD)"
     case state18 = "Состояние ЭПИ (OLD)"
+    case analitic = "Аналитик"
     case ak = "АК"
     case vp = "ВП"
     case k1 = "K1"
