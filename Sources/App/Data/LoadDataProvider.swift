@@ -38,6 +38,7 @@ class LoadDataProvider {
     var usersTeams: [String:String] = [:]
     let type = QueryResultFormat.json
     var dataDict: [String : Data] = [:]
+    var flag: String = "Началось"
     
     
     func TestConnectAPI(req: DatabaseConnectable) -> String {
@@ -51,8 +52,21 @@ class LoadDataProvider {
         var urlComponents = dataProvider.getUrlComponents(server: query.server, query: query, format: type)
         urlComponents.user = globalSettings.login
         urlComponents.password = globalSettings.password
+        flag = "Началось"
         guard let url = urlComponents.url else { return "Ничего не получилось" }
-        return url.absoluteString
+        self.dataProvider.downloadDataNTLM(url: url) { data in
+            guard let data = data else {
+                self.flag = "Данных не получено"
+                return
+            }
+            self.flag = String.init(data: data, encoding: .utf8)!
+            return
+        }
+        
+        while flag == "Началось" {
+            
+        }
+        return flag
     }
         
     
