@@ -15,7 +15,7 @@ class DataProvider: NSObject {
     var globalSettings = GlobalSettings()
     
     lazy var conn: URLSession = {
-        let config = URLSessionConfiguration.ephemeral
+        let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
         return session
     }()
