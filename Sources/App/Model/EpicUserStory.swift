@@ -10,7 +10,7 @@ import Fluent
 import FluentMySQL
 import Vapor
 
-struct EpicUserStory: Content {
+struct EpicUserStory: Content, MySQLUUIDModel, Migration {
     var id: UUID?
     var guid: String
     var dataVersion: String
@@ -62,7 +62,4 @@ struct EpicUserStory: Content {
     
     
     
-}
-extension EpicUserStory: MySQLUUIDModel {}
-extension EpicUserStory: Migration {
 }

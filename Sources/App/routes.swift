@@ -74,8 +74,26 @@ public func routes(_ router: Router) throws {
         return Quota.query(on: req).all()
     }
     
-    router.get("EpicUserStories") { req -> Future<[EpicUserStory]> in
-        return EpicUserStory.query(on: req).all()
+//    router.get("EpicUserStories") { req -> Future<[EpicUserStory]> in
+//        return EpicUserStory.query(on: req).all()
+//    }
+    
+    router.get("EpicUserStories", "direction", String.parameter) { req -> Future<[EpicUserStory]> in
+        let directionId = try req.parameters.next(String.self)
+        let query = EpicUserStory.query(on: req).filter(\EpicUserStory.directionId, ._equal,  directionId).all()
+        return query
+    }
+    
+    router.get("EpicUserStory", Int32.parameter) { req -> Future<[EpicUserStory]> in
+        let tfsId = try req.parameters.next(Int32.self)
+        let query = EpicUserStory.query(on: req).filter(\EpicUserStory.tfsId, ._equal,  tfsId).all()
+        return query
+    }
+    
+    router.get("TreeWorkItems", "Level", Int.parameter) { req -> Future<[TreeWorkItem]> in
+        let level = try req.parameters.next(Int.self)
+        let query = TreeWorkItem.query(on: req).filter(\TreeWorkItem.level, ._equal,  level).all()
+        return query
     }
     
     router.post(Category.self, at: "category/create") { req, category -> Future<Category> in
