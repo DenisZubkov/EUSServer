@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Routing
+import Vapor
 
 class DataProvider: NSObject {
     
