@@ -54,14 +54,20 @@ class LoadDataProvider {
         urlComponents.password = globalSettings.password
         flag = "Началось"
         guard let url = urlComponents.url else { return "Ничего не получилось" }
-        self.dataProvider.downloadDataNTLM(url: url) { data in
-            guard let data = data else {
-                self.flag = "Данных не получено"
-                return
-            }
-            self.flag = String.init(data: data, encoding: .utf8)!
-            return
+        do {
+            let data = try Data(contentsOf: url)
+            flag = String.init(data: data, encoding: .utf8)!
+        } catch {
+            flag = "Не получилось"
         }
+//        self.dataProvider.downloadDataNTLM(url: url) { data in
+//            guard let data = data else {
+//                self.flag = "Данных не получено"
+//                return
+//            }
+//
+//            return
+//        }
         
         while flag == "Началось" {
             
