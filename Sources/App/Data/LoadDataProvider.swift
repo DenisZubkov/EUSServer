@@ -39,6 +39,23 @@ class LoadDataProvider {
     let type = QueryResultFormat.json
     var dataDict: [String : Data] = [:]
     
+    
+    func TestConnectAPI(req: DatabaseConnectable) -> String {
+        let filterParameters = globalSettings.createOrFilter(fieldName: "Ref_Key", valueDict: globalSettings.parameterDict)
+        let query = ODataQuery.init(server: globalSettings.server1C,
+                                    table: "ChartOfCharacteristicTypes_ДополнительныеРеквизитыИСведения/",
+                                    filter: filterParameters,
+                                    select: "Ref_Key, Заголовок, DataVersion",
+                                    orderBy: nil,
+                                    id: nil)
+        var urlComponents = dataProvider.getUrlComponents(server: query.server, query: query, format: type)
+        urlComponents.user = globalSettings.login
+        urlComponents.password = globalSettings.password
+        guard let url = urlComponents.url else { return "Ничего не получилось" }
+        return url.absoluteString
+    }
+        
+    
     func getAllData(req: DatabaseConnectable) {
         let queries = globalSettings.prepareQueryArray()
         var index = 0

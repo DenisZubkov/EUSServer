@@ -20,6 +20,11 @@ public func routes(_ router: Router) throws {
         return "Refresh started"
     }
     
+    router.get("refresh") { req -> String in
+        let loadData = LoadDataProvider()
+        return "\(loadData.TestConnectAPI(req: req))"
+    }
+    
     router.get("refresh", "tfs") { req -> String in
         let loadData = LoadDataProvider()
         loadData.getTFSData(req: req)
