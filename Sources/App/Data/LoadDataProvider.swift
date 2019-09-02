@@ -43,24 +43,23 @@ class LoadDataProvider {
     
     func TestConnectAPI(req: DatabaseConnectable) -> String {
         let filterParameters = globalSettings.createOrFilter(fieldName: "Ref_Key", valueDict: globalSettings.parameterDict)
-        let query = ODataQuery.init(server: globalSettings.server1C,
-                                    table: "ChartOfCharacteristicTypes_ДополнительныеРеквизитыИСведения/",
-                                    filter: filterParameters,
-                                    select: "Ref_Key, Заголовок, DataVersion",
+        let query = ODataQuery.init(server: self.globalSettings.serverTFS,
+                                    table: "workitems",
+                                    filter: "4644, 4642,5547, 4641, 4637, 4640, 5548, 4638, 4639, 4643",
+                                    select: nil,
                                     orderBy: nil,
-                                    id: nil)
-        var urlComponents = dataProvider.getUrlComponents(server: query.server, query: query, format: type)
+                                    id: 3717)
+        var urlComponents = dataProvider.getUrlComponents(server: query.server, query: query, format: .tfs)
         urlComponents.user = globalSettings.login
         urlComponents.password = globalSettings.password
         flag = "Началось"
         
         guard let url = urlComponents.url else { return "Ничего не получилось" }
-        return flag
         do {
             let data = try Data(contentsOf: url)
             flag = String.init(data: data, encoding: .utf8)!
         } catch {
-            flag = "Не получилось"
+            flag = url.absoluteString
         }
 //        self.dataProvider.downloadDataNTLM(url: url) { data in
 //            guard let data = data else {
@@ -366,6 +365,7 @@ class LoadDataProvider {
         urlComponents.user = globalSettings.login
         urlComponents.password = globalSettings.password
         guard let url = urlComponents.url else { return }
+        print(url.absoluteString)
         var index = i
         var currentLevel = level
         self.dataProvider.downloadDataNTLM(url: url) { data in
