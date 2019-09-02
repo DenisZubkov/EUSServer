@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Routing
+import Vapor
 
 class GlobalSettings {
     let server1C = ODataServer.init(scheme: "http", host: "10.1.0.70", port: 80, server: "/DocMng", oData: "/odata/standard.odata/")
@@ -415,6 +417,12 @@ class GlobalSettings {
         }
     }
     
+    func saveLoadLog(date: Date, name: String, description: String?, value: Int?, time: Double?, req: DatabaseConnectable) {
+        let loadLogDB = LoadLog.init(id: nil, date: date, name: name, description: description, Value: value, time: time)
+        let _ = loadLogDB.save(on: req)
+        
+    }
+    
 }
 
 enum ObjectJSON: String {
@@ -461,4 +469,5 @@ enum TypeParameters: String {
     case k6 = "K6"
     case rn = "РН"
 }
+
 

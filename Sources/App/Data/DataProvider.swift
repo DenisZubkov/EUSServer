@@ -141,7 +141,7 @@ class DataProvider: NSObject {
     
     func getRequest(url: URL, login: String, password: String) -> URLRequest {
         var request = URLRequest(url: url, cachePolicy: URLRequest.CachePolicy.reloadIgnoringCacheData, timeoutInterval: 100)
-        let loginString = NSString(format: "%@:%@", login as! CVarArg, password as! CVarArg)
+        let loginString = NSString(format: "%@:%@", login as! CVarArg, password as CVarArg)
         let loginData: NSData = loginString.data(using: String.Encoding.utf8.rawValue)! as NSData
         let base64LoginString = loginData.base64EncodedString(options: NSData.Base64EncodingOptions())
         let parameters = ["Authorization": "Basic \(base64LoginString)",

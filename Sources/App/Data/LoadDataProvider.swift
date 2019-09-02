@@ -57,6 +57,7 @@ class LoadDataProvider {
             if let data = data {
                 self.dataDict["\(index)\(type.rawValue)"] = data
                 let _ = self.globalSettings.saveDataToFile(fileName: "\(index) \(type.rawValue)", fileExt: "json", data: data)
+                self.globalSettings.saveLoadLog(date: Date(), name: "Загрузка данных из 1С", description: type.rawValue, value: index, time: nil, req: req)
                 index += 1
                 if index < queries.count {
                     self.getDataFrom(queries: queries, i: &index, type: type, req: req)
@@ -80,6 +81,7 @@ class LoadDataProvider {
     
     
     func getDataFromDB(req: DatabaseConnectable) {
+        self.globalSettings.saveLoadLog(date: Date(), name: "Загрузка данных из DB", description: nil, value: nil, time: nil, req: req)
         let _ = UserStoryType.query(on: req).all().map { results in
             self.userStoryTypes = results
             let _ = Property.query(on: req).all().map { results in
@@ -119,7 +121,9 @@ class LoadDataProvider {
                                                                                 
                                                                                 let _ = UserStory.query(on: req).all().map { results in
                                                                                     self.userStories = results
+                                                                                    self.globalSettings.saveLoadLog(date: Date(), name: "Разбор данных", description: nil, value: nil, time: nil, req: req)
                                                                                     self.parceData(req: req)
+                                                                                    self.globalSettings.saveLoadLog(date: Date(), name: "Загрузка данных из TFS", description: nil, value: nil, time: nil, req: req)
                                                                                     self.getTreeWorkItems(req: req)
                                                                                 }
                                                                             }
@@ -536,6 +540,7 @@ class LoadDataProvider {
         for i in userStoryTypes {
             let _ = i.save(on: req)
         }
+        self.globalSettings.saveLoadLog(date: Date(), name: "Разбор:", description: "\(#function)", value: nil, time: nil, req: req)
     }
     
     //MARK: 1C - PARSING
@@ -561,6 +566,7 @@ class LoadDataProvider {
                 }
             }
         }
+        self.globalSettings.saveLoadLog(date: Date(), name: "Разбор:", description: "\(#function)", value: nil, time: nil, req: req)
     }
     
     //MARK: PropertyValues - update
@@ -586,6 +592,7 @@ class LoadDataProvider {
                 }
             }
         }
+        self.globalSettings.saveLoadLog(date: Date(), name: "Разбор:", description: "\(#function)", value: nil, time: nil, req: req)
     }
     
     //MARK: StrategicTargets, Tactics - update
@@ -622,6 +629,7 @@ class LoadDataProvider {
                 }
             }
         }
+        self.globalSettings.saveLoadLog(date: Date(), name: "Разбор:", description: "\(#function)", value: nil, time: nil, req: req)
     }
     
     
@@ -658,6 +666,7 @@ class LoadDataProvider {
                 }
             }
         }
+        self.globalSettings.saveLoadLog(date: Date(), name: "Разбор:", description: "\(#function)", value: nil, time: nil, req: req)
     }
     
     
@@ -683,6 +692,7 @@ class LoadDataProvider {
                 }
             }
         }
+        self.globalSettings.saveLoadLog(date: Date(), name: "Разбор:", description: "\(#function)", value: nil, time: nil, req: req)
     }
     
     //MARK: Quarts - update
@@ -704,6 +714,7 @@ class LoadDataProvider {
                 }
             }
         }
+        self.globalSettings.saveLoadLog(date: Date(), name: "Разбор:", description: "\(#function)", value: nil, time: nil, req: req)
     }
     
     //MARK: TypeTeams - update
@@ -721,6 +732,7 @@ class LoadDataProvider {
                 typeTeams.append(typeTeamDB)
             }
         }
+        self.globalSettings.saveLoadLog(date: Date(), name: "Разбор:", description: "\(#function)", value: nil, time: nil, req: req)
     }
     
     
@@ -754,6 +766,7 @@ class LoadDataProvider {
                 }
             }
         }
+        self.globalSettings.saveLoadLog(date: Date(), name: "Разбор:", description: "\(#function)", value: nil, time: nil, req: req)
     }
     
     // MARK: Teams - update
@@ -796,6 +809,7 @@ class LoadDataProvider {
                 }
             }
         }
+        self.globalSettings.saveLoadLog(date: Date(), name: "Разбор:", description: "\(#function)", value: nil, time: nil, req: req)
     }
     
     // MARK: Users - update
@@ -844,6 +858,7 @@ class LoadDataProvider {
                 }
             }
         }
+        self.globalSettings.saveLoadLog(date: Date(), name: "Разбор:", description: "\(#function)", value: nil, time: nil, req: req)
     }
     
     
@@ -874,6 +889,7 @@ class LoadDataProvider {
                 }
             }
         }
+        self.globalSettings.saveLoadLog(date: Date(), name: "Разбор:", description: "\(#function)", value: nil, time: nil, req: req)
     }
     
     //MARK: Quotas - update
@@ -900,6 +916,7 @@ class LoadDataProvider {
                 }
             }
         }
+        self.globalSettings.saveLoadLog(date: Date(), name: "Разбор:", description: "\(#function)", value: nil, time: nil, req: req)
     }
     
     //MARK: EpicUserStories - update
@@ -1108,6 +1125,8 @@ class LoadDataProvider {
                 }
             }
         }
+        self.globalSettings.saveLoadLog(date: Date(), name: "Разбор:", description: "\(#function)", value: nil, time: nil, req: req)
     }
+    
     
 }

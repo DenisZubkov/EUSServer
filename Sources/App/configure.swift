@@ -48,6 +48,7 @@ public func configure(
     migrationConfig.add(model: UserStory.self, database: .mysql)
     migrationConfig.add(model: UserStoryType.self, database: .mysql)
     migrationConfig.add(model: Quart.self, database: .mysql)
+    migrationConfig.add(model: LoadLog.self, database: .mysql)
     services.register(migrationConfig)
     
 }

@@ -22,6 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		7A2780582317C60500E9621B /* EUSStateJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A2780572317C60400E9621B /* EUSStateJSON.swift */; };
+		7A9507FB2319006E00569B85 /* LoadLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9507FA2319006E00569B85 /* LoadLog.swift */; };
 		7AB0B9C32313ED800055CE89 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB0B9C22313ED800055CE89 /* Product.swift */; };
 		7AB94555231689980000701D /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB94554231689980000701D /* State.swift */; };
 		7AB9455D23168BAB0000701D /* UserStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB9455C23168BAB0000701D /* UserStory.swift */; };
@@ -5664,6 +5665,7 @@
 
 /* Begin PBXFileReference section */
 		7A2780572317C60400E9621B /* EUSStateJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EUSStateJSON.swift; sourceTree = "<group>"; };
+		7A9507FA2319006E00569B85 /* LoadLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadLog.swift; sourceTree = "<group>"; };
 		7AB0B9C22313ED800055CE89 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		7AB94554231689980000701D /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		7AB9455C23168BAB0000701D /* UserStory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStory.swift; sourceTree = "<group>"; };
@@ -7836,6 +7838,7 @@
 				OBJ_31 /* EpicUserStory.swift */,
 				OBJ_38 /* TreeWorkItem.swift */,
 				7AB0B9C22313ED800055CE89 /* Product.swift */,
+				7A9507FA2319006E00569B85 /* LoadLog.swift */,
 				7AB94554231689980000701D /* State.swift */,
 				7AB9455C23168BAB0000701D /* UserStory.swift */,
 				7AB9455E23168D9A0000701D /* UserStoryType.swift */,
@@ -11832,6 +11835,7 @@
 				OBJ_1081 /* Team.swift in Sources */,
 				OBJ_1082 /* TreeWorkItem.swift in Sources */,
 				OBJ_1083 /* TypeTeam.swift in Sources */,
+				7A9507FB2319006E00569B85 /* LoadLog.swift in Sources */,
 				OBJ_1084 /* User.swift in Sources */,
 				OBJ_1085 /* boot.swift in Sources */,
 				OBJ_1086 /* configure.swift in Sources */,
