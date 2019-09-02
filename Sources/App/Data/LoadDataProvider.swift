@@ -53,7 +53,9 @@ class LoadDataProvider {
         urlComponents.user = globalSettings.login
         urlComponents.password = globalSettings.password
         flag = "Началось"
+        
         guard let url = urlComponents.url else { return "Ничего не получилось" }
+        return flag
         do {
             let data = try Data(contentsOf: url)
             flag = String.init(data: data, encoding: .utf8)!
