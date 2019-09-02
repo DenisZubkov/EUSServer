@@ -11,7 +11,7 @@ import Vapor
 
 struct Quota: Content {
     var id: UUID?
-    var quart: Date
+    var quart: String
     var storePointAnaliticPlan: Double
     var storePointAnaliticFact: Double
     var storePointAnaliticWork: Double

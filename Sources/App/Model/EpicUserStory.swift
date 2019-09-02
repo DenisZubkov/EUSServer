@@ -14,10 +14,10 @@ struct EpicUserStory: Content, MySQLUUIDModel, Migration {
     var id: UUID?
     var guid: String
     var dataVersion: String
-    var dateBegin: Date?
-    var dateCreate: Date?
-    var dateEnd: Date?
-    var deathLine: Date?
+    var dateBegin: String?
+    var dateCreate: String?
+    var dateEnd: String?
+    var deathLine: String?
     var name: String
     var noShow: Bool
     var num: String
@@ -36,14 +36,14 @@ struct EpicUserStory: Content, MySQLUUIDModel, Migration {
     var storePointsDevFact: String?
     var storePointsDevPlane: String?
     var tfsAnalitic: String?
-    var tfsBeginDate: Date?
+    var tfsBeginDate: String?
     var tfsBusinessArea: String?
     var tfsBusinessValue: Int32?
     var tfsCategory: String?
-    var tfsDateCreate: Date?
-    var tfsEndDate: Date?
+    var tfsDateCreate: String?
+    var tfsEndDate: String?
     var tfsId: Int32?
-    var tfsLastChangeDate: Date?
+    var tfsLastChangeDate: String?
     var tfsParentWorkItemUrl: String?
     var tfsPriority: Int32?
     var tfsProductOwner: String?

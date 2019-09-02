@@ -404,15 +404,15 @@ class LoadDataProvider {
                 let analiticId = users.filter({analitic.contains($0.fio)}).first?.guid {
                 epicUserStories[index].analiticId = analiticId
             }
-            epicUserStories[index].tfsBeginDate = globalSettings.convertStringTFSToDate(from: eusTFS.fields.beginDate)
+            epicUserStories[index].tfsBeginDate = eusTFS.fields.beginDate
             epicUserStories[index].tfsBusinessArea = eusTFS.fields.businessArea
             if let bussinessValue = eusTFS.fields.businessValue {
                 epicUserStories[index].tfsBusinessValue = Int32(bussinessValue)
             }
             epicUserStories[index].tfsCategory = eusTFS.fields.categoryName
-            epicUserStories[index].tfsDateCreate = globalSettings.convertStringTFSToDate(from: eusTFS.fields.createdDate)
-            epicUserStories[index].tfsEndDate = globalSettings.convertStringTFSToDate(from: eusTFS.fields.endDate)
-            epicUserStories[index].tfsLastChangeDate = globalSettings.convertStringTFSToDate(from: eusTFS.fields.lastChangeDate)
+            epicUserStories[index].tfsDateCreate = eusTFS.fields.createdDate
+            epicUserStories[index].tfsEndDate = eusTFS.fields.endDate
+            epicUserStories[index].tfsLastChangeDate = eusTFS.fields.lastChangeDate
             epicUserStories[index].tfsParentWorkItemUrl = eusTFS.relations.filter({$0.rel == "System.LinkTypes.Hierarchy-Reverse"}).first?.url
             if let priority = eusTFS.fields.priority {
                 epicUserStories[index].tfsPriority = Int32(priority)
@@ -899,7 +899,7 @@ class LoadDataProvider {
             
             if let quotas1C = quotasJSON?.value {
                 for quota1C in quotas1C {
-                    guard let date = globalSettings.convertString1cToDate(from: quota1C.quart) else { return }
+                    let date = quota1C.quart
                     if var quotaDB = quotas.filter({$0.quart == date && $0.directionId == quota1C.directionId}).first {
                         quotaDB.storePointAnaliticPlan = quota1C.storePointAnaliticPlan
                         quotaDB.storePointAnaliticFact = quota1C.storePointAnaliticFact
@@ -1065,9 +1065,9 @@ class LoadDataProvider {
                         quart = quarts.filter({$0.guid == quartId}).first?.name
                         
                     }
-                    var deathLine: Date?
+                    var deathLine: String?
                     if let deathLineNew = eus1C.дополнительныеРеквизиты.filter({$0.parameterId == globalSettings.parameterDict[.deathline]}).first {
-                        deathLine = globalSettings.convertString1cToDate(from: deathLineNew.valueId)
+                        deathLine = deathLineNew.valueId
                         
                     }
                     var priorityDB: Int32?
@@ -1077,8 +1077,8 @@ class LoadDataProvider {
                         }
                     }
                     
-                    let dateCreate = globalSettings.convertString1cToDate(from: eus1C.dateCreate)
-                    let dateBegin = globalSettings.convertString1cToDate(from: eus1C.dateRegistration)
+                    let dateCreate =  eus1C.dateCreate
+                    let dateBegin = eus1C.dateRegistration
                     let noShow = eus1C.deletionMark
                     
                     var stateId = ""
