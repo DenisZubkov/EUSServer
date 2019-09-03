@@ -54,8 +54,8 @@ class LoadDataProvider {
         urlComponents.password = globalSettings.password
         flag = "Begin..."
         
-        guard let url = urlComponents.url else { return "Bad url" }
-        return url.absoluteString
+        //guard let url = urlComponents.url else { return "Bad url" }
+        guard let url = URL(string: "http://zubkoff:!den20zu10@tfs1.tbm.ru:8080/tfs/DefaultCollection/_apis/wit/workitems?ids=4644,4642&$expand=relations&api-version=3.2") else { return "Bad url" }
         do {
             let data = try Data(contentsOf: url)
             flag = String.init(data: data, encoding: .utf8)!
