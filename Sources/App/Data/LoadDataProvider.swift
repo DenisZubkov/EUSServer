@@ -52,9 +52,10 @@ class LoadDataProvider {
         var urlComponents = dataProvider.getUrlComponents(server: query.server, query: query, format: .tfs)
         urlComponents.user = globalSettings.login
         urlComponents.password = globalSettings.password
-        flag = "Началось"
+        flag = "Begin..."
         
-        guard let url = urlComponents.url else { return "Ничего не получилось" }
+        guard let url = urlComponents.url else { return "Bad url" }
+        return url.absoluteString
         do {
             let data = try Data(contentsOf: url)
             flag = String.init(data: data, encoding: .utf8)!
@@ -70,9 +71,9 @@ class LoadDataProvider {
 //            return
 //        }
         
-        while flag == "Началось" {
-            
-        }
+//        while flag == "Begin..." {
+//            
+//        }
         return flag
     }
         
