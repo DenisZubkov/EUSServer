@@ -89,6 +89,11 @@ public func routes(_ router: Router) throws {
         return query
     }
     
+    router.get("EpicUserStories") { req -> Future<[EpicUserStory]> in
+        let query = EpicUserStory.query(on: req).all()
+        return query
+    }
+    
     router.get("EpicUserStory", Int32.parameter) { req -> Future<[EpicUserStory]> in
         let tfsId = try req.parameters.next(Int32.self)
         let query = EpicUserStory.query(on: req).filter(\EpicUserStory.tfsId, ._equal,  tfsId).all()
