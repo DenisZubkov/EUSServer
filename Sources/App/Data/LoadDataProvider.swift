@@ -14,7 +14,6 @@ class LoadDataProvider {
     var queriesTFS: [ODataQuery] = []
     let dataProvider = DataProvider()
     let globalSettings = GlobalSettings()
-    let parceDataProvider = ParceDataProvider()
     var date = Date()
     var properties: [Property] = []
     var propertyValues: [PropertyValue] = []
@@ -35,6 +34,7 @@ class LoadDataProvider {
     var userStoryTypes: [UserStoryType] = []
     var userStories: [UserStory] = []
     var quarts: [Quart] = []
+    
     var usersTeams: [String:String] = [:]
     let type = QueryResultFormat.json
     var dataDict: [String : Data] = [:]
@@ -54,8 +54,8 @@ class LoadDataProvider {
         urlComponents.password = globalSettings.password
         flag = "Begin..."
         
-        //guard let url = urlComponents.url else { return "Bad url" }
-        guard let url = URL(string: "http://zubkoff:!den20zu10@tfs1.tbm.ru:8080/tfs/DefaultCollection/_apis/wit/workitems?ids=4644,4642&$expand=relations&api-version=3.2") else { return "Bad url" }
+        guard let url = urlComponents.url else { return "Bad url" }
+        //guard let url = URL(string: "http://zubkoff:!den20zu10@tfs1.tbm.ru:8080/tfs/DefaultCollection/_apis/wit/workitems?ids=4644,4642&$expand=relations&api-version=3.2") else { return "Bad url" }
         do {
             let data = try Data(contentsOf: url)
             flag = String.init(data: data, encoding: .utf8)!
@@ -366,7 +366,7 @@ class LoadDataProvider {
         urlComponents.user = globalSettings.login
         urlComponents.password = globalSettings.password
         guard let url = urlComponents.url else { return }
-        print(url.absoluteString)
+        //print(url.absoluteString)
         var index = i
         var currentLevel = level
         self.dataProvider.downloadDataNTLM(url: url) { data in
