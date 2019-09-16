@@ -42,7 +42,6 @@ class LoadDataProvider {
     
     
     func TestConnectAPI(req: DatabaseConnectable) -> String {
-        let filterParameters = globalSettings.createOrFilter(fieldName: "Ref_Key", valueDict: globalSettings.parameterDict)
         let query = ODataQuery.init(server: self.globalSettings.serverTFS,
                                     table: "workitems",
                                     filter: "4644, 4642,5547, 4641, 4637, 4640, 5548, 4638, 4639, 4643",
@@ -56,34 +55,28 @@ class LoadDataProvider {
         
         //guard let url = urlComponents.url else { return "Bad url" }
         guard let url = URL(string: "http://zubkoff:!den20zu10@tfs1.tbm.ru:8080/tfs/DefaultCollection/_apis/wit/workitems?ids=4644,4642&$expand=relations&api-version=3.2") else { return "Bad url" }
-        do {
-            let data = try Data(contentsOf: url)
-            flag = String.init(data: data, encoding: .utf8)!
-        } catch let error as NSError {
-            print(error.localizedDescription)
-            flag = error.localizedDescription
+        let runLoop = CFRunLoopGetCurrent()
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        let task = session.dataTask(with: url) { (data, response, error) in
+            print("Retrieved data")
+            if let error = error {
+                print("Error: \(error)")
+            } else if let response = response,
+                let data = data,
+                let string = String(data: data, encoding: .utf8)
+                {
+                let subString = String(string.prefix(100))
+                print("Response: \(response)")
+                print("DATA:\n\(subString)\nEND DATA\n")
+                self.globalSettings.saveLoadLog(date: Date(), name: "Тест загрузки данных из TFS", description: subString, value: -1, time: nil, req: req)
+                self.flag = string
+            }
+            CFRunLoopStop(runLoop)
         }
-        
-//        do {
-//            let data = try Data(contentsOf: url)
-//            let flag = String.init(data: data, encoding: .utf8)!
-//            print(flag)
-//        } catch let error as NSError {
-//            let flag = error.localizedDescription
-//            print(flag)
-//        }
-//        self.dataProvider.downloadDataNTLM(url: url) { data in
-//            guard let data = data else {
-//                self.flag = "Данных не получено"
-//                return
-//            }
-//
-//            return
-//        }
-        
-//        while flag == "Begin..." {
-//            
-//        }
+        task.resume()
+        CFRunLoopRun()
+        print(flag)
         return flag
     }
         
