@@ -25,7 +25,7 @@ public func routes(_ router: Router) throws {
         return "\(loadData.TestConnectAPI(req: req))"
     }
     
-    router.get("test") { req -> String in
+    router.get("test") { req -> Future<[LoadLog]> in
         let client = try req.make(Client.self)
         print(client) // Client
         let res = client.get("http://zubkoff:!den20zu10@tfs1.tbm.ru:8080/tfs/DefaultCollection/_apis/wit/workitems?ids=4644,4642&$expand=relations&api-version=3.2")
@@ -39,7 +39,7 @@ public func routes(_ router: Router) throws {
             }
             return res
         }
-        return "Выполнен тест!"
+        return LoadLog.query(on: req).all()
 //        return
         
     }
