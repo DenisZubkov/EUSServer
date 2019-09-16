@@ -27,11 +27,11 @@ public func routes(_ router: Router) throws {
     
     router.get("test") { req -> Future<[LoadLog]> in
         let client = try req.make(Client.self)
-        print(client) // Client
         let res = client.get("http://zubkoff:!den20zu10@tfs1.tbm.ru:8080/tfs/DefaultCollection/_apis/wit/workitems?ids=4644,4642&$expand=relations&api-version=3.2")
-        _ = res.flatMap(to: Response.self) { response -> Future<Response> in
+        print(res)
+        res.flatMap(to: Response.self) { response -> Future<Response> in
             let globalSettings = GlobalSettings()
-            print(response.http.body)
+            print("PROVALILSYA")
             if let data = response.http.body.data {
                 let string = String(data: data, encoding: .utf8)
                 let subString = String((string?.prefix(100))!)
