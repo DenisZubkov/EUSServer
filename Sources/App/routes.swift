@@ -29,16 +29,16 @@ public func routes(_ router: Router) throws {
         let client = try req.make(Client.self)
         let res = client.get("http://zubkoff:!den20zu10@tfs1.tbm.ru:8080/tfs/DefaultCollection/_apis/wit/workitems?ids=4644,4642&$expand=relations&api-version=3.2")
         print(res)
-//        res.flatMap(to: Response.self) { response -> Future<Response> in
-//            let globalSettings = GlobalSettings()
-//            print("PROVALILSYA")
-//            if let data = response.http.body.data {
-//                let string = String(data: data, encoding: .utf8)
-//                let subString = String((string?.prefix(100))!)
-//                globalSettings.saveLoadLog(date: Date(), name: "Загрузка данных из TFS", description: subString, value: -1, time: nil, req: req)
-//            }
-//            return res
-//        }
+        _ = res.flatMap(to: Response.self) { response -> Future<Response> in
+            let globalSettings = GlobalSettings()
+            print(response)
+            if let data = response.http.body.data {
+                let string = String(data: data, encoding: .utf8)
+                let subString = String((string?.prefix(100))!)
+                globalSettings.saveLoadLog(date: Date(), name: "Загрузка данных из TFS", description: subString, value: -1, time: nil, req: req)
+            }
+            return res
+        }
         return LoadLog.query(on: req).all()
 //        return
         
