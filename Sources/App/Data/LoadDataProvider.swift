@@ -63,6 +63,15 @@ class LoadDataProvider {
             print(error.localizedDescription)
             flag = error.localizedDescription
         }
+        
+//        do {
+//            let data = try Data(contentsOf: url)
+//            let flag = String.init(data: data, encoding: .utf8)!
+//            print(flag)
+//        } catch let error as NSError {
+//            let flag = error.localizedDescription
+//            print(flag)
+//        }
 //        self.dataProvider.downloadDataNTLM(url: url) { data in
 //            guard let data = data else {
 //                self.flag = "Данных не получено"
