@@ -111,7 +111,9 @@ class DataProvider: NSObject {
             self.dataCache.setObject(data as NSData, forKey: url.absoluteString as NSString)
             completion(data)
         }
+        print(#line, #function, "Before Task")
         task.resume()
+        print(#line, #function, "After Task")
         
     }
     
