@@ -94,7 +94,9 @@ class DataProvider: NSObject {
     func downloadDataNTLM(url: URL, completion: @escaping (Data?) -> Void) {
         let request = NSMutableURLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 60000)
         request.httpMethod = "GET"
+        print(#line, #function)
         let task = conn.dataTask(with: request as URLRequest) { (data, response, error) -> Void in
+            print(#line, #function, "Retrive data")
             if error != nil {
                 completion(error?.localizedDescription.data(using: .utf8))
             }
