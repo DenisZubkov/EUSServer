@@ -60,23 +60,23 @@ class LoadDataProvider {
         let runLoop = CFRunLoopGetCurrent()
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
-        let task = session.dataTask(with: url) { (data, response, error) in
+        self.dataProvider.downloadDataNTLM(url: url) { data in
+        //let task = session.dataTask(with: url) { (data, response, error) in
             print("Retrieved data")
-            if let error = error {
-                print("Error: \(error)")
-            } else if let response = response,
-                let data = data,
+//            if let error = error {
+//                print("Error: \(error)")
+//            } else if let response = response,
+              if let data = data,
                 let string = String(data: data, encoding: .utf8)
                 {
                 let subString = String(string.prefix(100))
-                print("Response: \(response)")
                 print("DATA:\n\(subString)\nEND DATA\n")
                 self.globalSettings.saveLoadLog(date: Date(), name: "Тест загрузки данных из TFS", description: subString, value: -1, time: nil, req: req)
                 self.flag = string
             }
             CFRunLoopStop(runLoop)
         }
-        task.resume()
+        //task.resume()
         CFRunLoopRun()
         print(flag)
         return flag
