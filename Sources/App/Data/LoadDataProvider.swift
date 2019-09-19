@@ -56,7 +56,7 @@ class LoadDataProvider {
         
         guard let url = urlComponents.url else { return "Bad url" }
         print(url.absoluteString)
-        //guard let url = URL(string: "http://zubkoff:!den20zu10@tfs1.tbm.ru:8080/tfs/DefaultCollection/_apis/wit/workitems?ids=4644,4642&$expand=relations&api-version=3.2") else { return "Bad url" }
+        //guard let url = URL(string: "http://\(globalSettings.login):\(globalSettings.password)@tfs1.tbm.ru:8080/tfs/DefaultCollection/_apis/wit/workitems?ids=4644,4642&$expand=relations&api-version=3.2") else { return "Bad url" }
         let runLoop = CFRunLoopGetCurrent()
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)

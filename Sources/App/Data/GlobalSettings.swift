@@ -24,7 +24,7 @@ class GlobalSettings {
     let facebookApp = ""
     let icq = ""
     let skype = ""
-    var login = "TBMMSK\u{8}zubkoff"
+    var login = "TBMMSK\\zubkoff"
     var password = "!den20zu10"
     var dataDict: [String : Data] = [:]
     let parameterDict: [TypeParameters : String] = [
