@@ -45,16 +45,27 @@ class LoadDataProvider {
     
 //    http://tbmmsk%5Czubkoff:!den20zu10@10.1.0.70:80/DocMng/odata/standard.odata/ChartOfCharacteristicTypes_%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%D0%A0%D0%B5%D0%BA%D0%B2%D0%B8%D0%B7%D0%B8%D1%82%D1%8B%D0%98%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F/?$select=Ref_Key,%20%D0%97%D0%B0%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%BE%D0%BA,%20DataVersion&$filter=Ref_Key%20eq%20guid'33e47edd-2f7b-11e9-8e2e-0050568d26bf'%20or%20Ref_Key%20eq%20guid'e945dcba-08c6-11e9-94b6-0050568d26bf'%20or%20Ref_Key%20eq%20guid'e098b409-6a5e-11e9-afc8-0050568d26bf'%20or%20Ref_Key%20eq%20guid'7f9f2184-67e7-11e9-afc8-0050568d26bf'%20or%20Ref_Key%20eq%20guid'71998249-67e7-11e9-afc8-0050568d26bf'%20or%20Ref_Key%20eq%20guid'19bf6ca6-bad9-11e7-acc5-0050568d26bf'%20or%20Ref_Key%20eq%20guid'32070e46-bad8-11e7-acc5-0050568d26bf'%20or%20Ref_Key%20eq%20guid'8815a07f-09c5-11e9-94b6-0050568d26bf'%20or%20Ref_Key%20eq%20guid'71c4c213-08c4-11e9-94b6-0050568d26bf'%20or%20Ref_Key%20eq%20guid'dc18d546-08c6-11e9-94b6-0050568d26bf'%20or%20Ref_Key%20eq%20guid'0b335ce8-6739-11e9-afc8-0050568d26bf'%20or%20Ref_Key%20eq%20guid'1f3da85c-2f7b-11e9-8e2e-0050568d26bf'%20or%20Ref_Key%20eq%20guid'b01fa2f0-08c4-11e9-94b6-0050568d26bf'%20or%20Ref_Key%20eq%20guid'd342c29c-5d40-11e6-850d-0050568d26bf'%20or%20Ref_Key%20eq%20guid'ba84e2e0-67f1-11e9-afc8-0050568d26bf'%20or%20Ref_Key%20eq%20guid'd36bb213-6a5e-11e9-afc8-0050568d26bf'%20or%20Ref_Key%20eq%20guid'89778d28-bad4-11e7-acc5-0050568d26bf'%20or%20Ref_Key%20eq%20guid'838c9a73-17b6-11e9-8e2e-0050568d26bf'%20or%20Ref_Key%20eq%20guid'fef304c1-bad8-11e7-acc5-0050568d26bf'%20or%20Ref_Key%20eq%20guid'ec76a4bf-5a81-11e9-a906-0050568d26bf'%20or%20Ref_Key%20eq%20guid'b64ba876-7f57-11e8-8acb-0050568d26bf'&$format=json
     
-    func TestConnectAPI(req: DatabaseConnectable) -> String {
-        let queries = globalSettings.prepareQueryArray()
-        var urlComponents = dataProvider.getUrlComponents(server: queries[0].server, query: queries[0], format: .json)
+    func TestConnectAPI(req: DatabaseConnectable, type : QueryResultFormat) -> String {
+        
+        let query = ODataQuery.init(server: self.globalSettings.serverTFS,
+                                    table: "workitems",
+                                    filter: "4644, 4642,5547, 4641, 4637, 4640, 5548, 4638, 4639, 4643",
+                                    select: nil,
+                                    orderBy: nil,
+                                    id: 3717)
+        var urlComponents = dataProvider.getUrlComponents(server: query.server, query: query, format: .tfs)
+        if type == .json {
+            let queries = globalSettings.prepareQueryArray()
+            urlComponents = dataProvider.getUrlComponents(server: queries[0].server, query: queries[0], format: .json)
+        }
         urlComponents.user = globalSettings.login
         urlComponents.password = globalSettings.password
         flag = "Begin..."
         
         guard let url = urlComponents.url else { return "Bad url" }
+        
+//        guard let url = URL(string: "http://\(globalSettings.login):\(globalSettings.password)@tfs1.tbm.ru:8080/tfs/DefaultCollection/_apis/wit/workitems?ids=4644,4642&$expand=relations&api-version=3.2") else { return "Bad url" }
         print(url.absoluteString)
-        //guard let url = URL(string: "http://\(globalSettings.login):\(globalSettings.password)@tfs1.tbm.ru:8080/tfs/DefaultCollection/_apis/wit/workitems?ids=4644,4642&$expand=relations&api-version=3.2") else { return "Bad url" }
         let runLoop = CFRunLoopGetCurrent()
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
