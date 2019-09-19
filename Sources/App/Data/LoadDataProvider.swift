@@ -71,7 +71,7 @@ class LoadDataProvider {
                 {
                 let subString = String(string.prefix(100))
                 print("DATA:\n\(subString)\nEND DATA\n")
-                self.globalSettings.saveLoadLog(date: Date(), name: "Тест загрузки данных из TFS", description: subString, value: -1, time: nil, req: req)
+                self.globalSettings.saveLoadLog(date: Date(), name: "Тест загрузки данных из TFS через NTLM", description: subString, value: -1, time: nil, req: req)
                 self.flag = string
             }
             CFRunLoopStop(runLoop)
