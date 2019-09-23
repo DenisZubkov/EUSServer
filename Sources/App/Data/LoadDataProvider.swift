@@ -56,7 +56,7 @@ class LoadDataProvider {
         var urlComponents = dataProvider.getUrlComponents(server: query.server, query: query, format: .tfs)
         if type == .json {
             let queries = globalSettings.prepareQueryArray()
-            urlComponents = dataProvider.getUrlComponents(server: queries[0].server, query: queries[0], format: .json)
+            urlComponents = dataProvider.getUrlComponents(server: queries[9].server, query: queries[9], format: .json)
         }
         urlComponents.user = globalSettings.login
         urlComponents.password = globalSettings.password

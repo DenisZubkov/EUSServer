@@ -299,6 +299,7 @@ class GlobalSettings {
                                 id: nil)
         queryArray.append(query)
         
+        
         //EUSState [8]
         if let eus18 = eusTypeDict[.eus18], let eus19 = eusTypeDict[.eus19] {
             query = ODataQuery.init(server: server1C,
@@ -309,6 +310,14 @@ class GlobalSettings {
                 id: nil)
             queryArray.append(query)
         }
+        
+        query = ODataQuery.init(server: server1C,
+                                table: "",
+                                filter: nil,
+                                select: nil,
+                                orderBy: nil,
+                                id: nil)
+        queryArray.append(query)
         
         //        //US TFS
         //        query = ODataQuery.init(server: serverTFS,
