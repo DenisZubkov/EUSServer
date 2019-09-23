@@ -92,27 +92,33 @@ class DataProvider: NSObject {
     }
     
     func downloadDataNTLM(url: URL, completion: @escaping (Data?) -> Void) {
+        let runLoop = CFRunLoopGetCurrent()
         let request = NSMutableURLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 60000)
         request.httpMethod = "GET"
         print(#line, #function)
         let task = conn.dataTask(with: request as URLRequest) { (data, response, error) -> Void in
             print(#line, #function, "Retrive data")
             if error != nil {
+                CFRunLoopStop(runLoop)
                 completion(error?.localizedDescription.data(using: .utf8))
             }
             guard let data = data else { return }
             guard let response = response as? HTTPURLResponse else { return }
             if response.statusCode != 200 {
                 let statusCodeString = String(response.statusCode)
+                CFRunLoopStop(runLoop)
                 completion(statusCodeString.data(using: .utf8))
                 return
             }
             //guard let `self` = self else { return }
             self.dataCache.setObject(data as NSData, forKey: url.absoluteString as NSString)
+            CFRunLoopStop(runLoop)
             completion(data)
+            
         }
         print(#line, #function, "Before Task")
         task.resume()
+        CFRunLoopRun()
         print(#line, #function, "After Task")
         
     }

@@ -66,9 +66,9 @@ class LoadDataProvider {
         
 //        guard let url = URL(string: "http://\(globalSettings.login):\(globalSettings.password)@tfs1.tbm.ru:8080/tfs/DefaultCollection/_apis/wit/workitems?ids=4644,4642&$expand=relations&api-version=3.2") else { return "Bad url" }
         print(url.absoluteString)
-        let runLoop = CFRunLoopGetCurrent()
-        let config = URLSessionConfiguration.default
-        let session = URLSession(configuration: config)
+        
+        //let config = URLSessionConfiguration.default
+        //let session = URLSession(configuration: config)
         self.dataProvider.downloadDataNTLM(url: url) { data in
         //let task = session.dataTask(with: url) { (data, response, error) in
             print("Retrieved data")
@@ -83,10 +83,10 @@ class LoadDataProvider {
                 self.globalSettings.saveLoadLog(date: Date(), name: "Тест загрузки данных из TFS через NTLM", description: subString, value: -1, time: nil, req: req)
                 self.flag = string
             }
-            CFRunLoopStop(runLoop)
+            
         }
         //task.resume()
-        CFRunLoopRun()
+        
         print(flag)
         return flag
     }
